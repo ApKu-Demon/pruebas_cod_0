@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>¿Quieres ser mi San Valentín?</title>
     <style>
-        /* Evitamos que la pantalla se mueva */
         body { 
             background-color: #ffe6e6; 
             font-family: 'Segoe UI', Arial, sans-serif; 
@@ -19,9 +18,9 @@
             align-items: center;
         }
 
-        h1 { color: #ff4d4d; font-size: 1.8rem; padding: 20px; }
+        h1 { color: #ff4d4d; font-size: 1.8rem; padding: 20px; z-index: 10; }
 
-        .container { position: relative; width: 100%; height: 300px; }
+        .container { position: relative; width: 100%; height: 300px; z-index: 10; }
 
         #btnSi { 
             background-color: #ffb3b3; 
@@ -33,6 +32,8 @@
             font-size: 1.2rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             cursor: pointer;
+            position: relative;
+            z-index: 20;
         }
 
         #btnNo { 
@@ -44,22 +45,11 @@
             border-radius: 50px; 
             font-size: 1rem;
             transition: 0.1s;
-            touch-action: none; /* Importante para móviles */
+            touch-action: none;
+            z-index: 20;
         }
 
-        /* Máscara de Corazón mejorada */
-        .heart-mask {
-            width: 160px; 
-            height: 160px;
-            object-fit: cover;
-            background-color: #ff4d4d;
-            display: inline-block;
-            margin: 10px;
-            /* Esta es la clave para que se vea como corazón en casi cualquier móvil */
-            clip-path: url(#heart-path);
-            -webkit-clip-path: polygon(50% 15%, 61% 2%, 81% 2%, 95% 14%, 95% 35%, 50% 100%, 5% 35%, 5% 14%, 19% 2%, 39% 2%);
-        }
-
+        /* Pantalla de Celebración */
         #pantalla2 {
             display: none;
             position: fixed;
@@ -69,6 +59,33 @@
             color: white;
             padding-top: 40px;
             overflow-y: auto;
+            z-index: 30;
+        }
+
+        .heart-mask {
+            width: 160px; 
+            height: 160px;
+            object-fit: cover;
+            margin: 10px;
+            clip-path: polygon(50% 15%, 61% 2%, 81% 2%, 95% 14%, 95% 35%, 50% 100%, 5% 35%, 5% 14%, 19% 2%, 39% 2%);
+            -webkit-clip-path: polygon(50% 15%, 61% 2%, 81% 2%, 95% 14%, 95% 35%, 50% 100%, 5% 35%, 5% 14%, 19% 2%, 39% 2%);
+            border: 2px solid white;
+        }
+
+        /* Estilos de la lluvia de corazones */
+        .corazon-caido {
+            position: fixed;
+            top: -10%;
+            font-size: 24px;
+            user-select: none;
+            z-index: 40;
+            animation: caer linear forwards;
+        }
+
+        @keyframes caer {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -83,14 +100,14 @@
     </div>
 
     <div id="pantalla2">
-        <h2>¡Sabía que dirías que sí! ❤️</h2>
+        <h2 id="msgFinal">¡Sabía que dirías que sí! ❤️</h2>
         <p>Eres lo mejor que me ha pasado amor mío</p>
         <div style="display: flex; justify-content: center; flex-wrap: wrap;">
-            <img src="foto1.jpeg" class="heart-mask" alt="Foto 1">
-            <img src="foto2.jpeg" class="heart-mask" alt="Foto 2">
+            <img src="foto1.jpeg" class="heart-mask" onerror="this.src='https://via.placeholder.com/150?text=Error+Foto+1'">
+            <img src="foto2.jpeg" class="heart-mask" onerror="this.src='https://via.placeholder.com/150?text=Error+Foto+2'">
         </div>
-        <br>
-        <button onclick="location.reload()" style="background:none; border:1px solid white; color:white; padding:10px; border-radius:10px;">Volver a ver</button>
+        <br><br>
+        <button onclick="location.reload()" style="background:none; border:1px solid white; color:white; padding:10px; border-radius:10px; margin-bottom: 50px;">Volver a intentar ❤️</button>
     </div>
 
     <script>
@@ -98,16 +115,13 @@
         
         function moverBoton() {
             const btn = document.getElementById('btnNo');
+            const margin = 50;
+            const maxX = window.innerWidth - btn.offsetWidth - margin;
+            const maxY = window.innerHeight - btn.offsetHeight - margin;
+            
             if (intentos < 5) {
-                // Calculamos límites para que no se salga de la pantalla
-                const margin = 50;
-                const maxX = window.innerWidth - btn.offsetWidth - margin;
-                const maxY = window.innerHeight - btn.offsetHeight - margin;
-                
-                // Aseguramos que el valor no sea negativo
                 const x = Math.max(margin, Math.random() * maxX);
                 const y = Math.max(margin, Math.random() * maxY);
-                
                 btn.style.left = x + 'px';
                 btn.style.top = y + 'px';
                 intentos++;
@@ -117,9 +131,30 @@
             }
         }
 
+        function crearLluvia() {
+            const simbolos = ['❤️', '💖', '💘', '✨', '🌸'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const corazon = document.createElement('div');
+                    corazon.className = 'corazon-caido';
+                    corazon.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    corazon.style.left = Math.random() * 100 + 'vw';
+                    corazon.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    corazon.style.opacity = Math.random();
+                    document.body.appendChild(corazon);
+                    
+                    // Limpiar el elemento después de la animación
+                    setTimeout(() => corazon.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
         function aceptar() {
             document.getElementById('pantalla1').style.display = 'none';
             document.getElementById('pantalla2').style.display = 'block';
+            crearLluvia();
+            // Lluvia infinita suave
+            setInterval(crearLluvia, 4000);
         }
     </script>
 </body>
