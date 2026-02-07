@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <style>
+        body { background-color: #ffe6e6; font-family: Arial, sans-serif; text-align: center; overflow: hidden; height: 100vh; margin: 0; }
+        h1 { color: #ff4d4d; margin-top: 20%; font-size: 1.5rem; }
+        .buttons { position: relative; height: 300px; }
+        #btnSi { background-color: #ffb3b3; color: white; border: none; padding: 15px 25px; font-weight: bold; border-radius: 10px; font-size: 1.2rem; }
+        #btnNo { position: absolute; background-color: #eee; border: none; padding: 10px 20px; border-radius: 10px; left: 60%; }
+        /* Máscara de corazón para las fotos */
+        .corazon-foto {
+            width: 250px; height: 250px;
+            object-fit: cover;
+            clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+            transform: scale(10); /* Ajuste de escala para el path */
+            transform-origin: top left;
+        }
+        /* Versión simplificada para web */
+        .heart-mask {
+            width: 200px; height: 200px;
+            background-color: pink;
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            mask-size: contain; mask-repeat: no-repeat;
+            -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="pantalla1">
+        <h1>¿Quieres ser mi San Valentín? ❤️</h1>
+        <div class="buttons">
+            <button id="btnSi" onclick="aceptar()">¡SIIIUUU!</button>
+            <button id="btnNo" onmouseover="moverBoton()" onclick="moverBoton()">NO</button>
+        </div>
+    </div>
+
+    <div id="pantalla2" style="display:none; background-color: #ff3366; height: 100vh; color: white; padding-top: 50px;">
+        <h2>¡Sabía que dirías que sí! ❤️</h2>
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <img src="foto1.jpg" class="heart-mask" style="width:150px; height:150px; object-fit: cover;">
+            <img src="foto2.jpg" class="heart-mask" style="width:150px; height:150px; object-fit: cover;">
+        </div>
+    </div>
+
+    <script>
+        let intentos = 0;
+        function moverBoton() {
+            if (intentos < 5) {
+                const btn = document.getElementById('btnNo');
+                const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+                btn.style.left = x + 'px';
+                btn.style.top = y + 'px';
+                intentos++;
+            } else {
+                alert("Apoco si tilina, Tú eres mía >:o, ponle que sí");
+                document.getElementById('btnNo').style.display = 'none';
+            }
+        }
+        function aceptar() {
+            document.getElementById('pantalla1').style.display = 'none';
+            document.getElementById('pantalla2').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
