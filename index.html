@@ -71,8 +71,8 @@ h1 {
 }
 
 .heart-mask {
-    width: 160px;
-    height: 160px;
+    width: 280px;
+    height: 280px;
     object-fit: cover;
     margin: 10px;
     clip-path: polygon(50% 15%, 61% 2%, 81% 2%, 95% 14%, 95% 35%, 50% 100%, 5% 35%, 5% 14%, 19% 2%, 39% 2%);
@@ -149,6 +149,7 @@ function crearLluvia() {
     corazon.className = 'corazon-caido';
     corazon.textContent = simbolos[Math.floor(Math.random()*simbolos.length)];
     corazon.style.left = Math.random()*100 + 'vw';
+    corazon.style.fontSize = (Math.random() * 30 + 30) + 'px';
     corazon.style.animationDuration = (Math.random()*3 + 3)+'s';
     document.body.appendChild(corazon);
     setTimeout(()=>corazon.remove(),6000);
@@ -164,3 +165,4 @@ function aceptar() {
 
 </body>
 </html>
+
