@@ -1,152 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Para mi San Valentín ❤️</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { 
-            background-color: #ffe6e6; 
-            font-family: sans-serif; 
-            margin: 0; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center;
-            overflow: hidden; /* Evita que la pantalla rebote */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Quieres ser mi San Valentín?</title>
 
-        h1 { color: #ff4d4d; font-size: 1.5rem; text-align: center; padding: 10px; }
+<style>
+body {
+    background-color: #ffe6e6;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
 
-        /* Área donde vive el botón */
-        .game-container {
-            position: relative;
-            width: 90vw;
-            height: 50vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+#pantalla1 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-        #btnSi { 
-            background-color: #ffb3b3; 
-            color: white; border: none; 
-            padding: 15px 30px; font-weight: bold; 
-            border-radius: 50px; font-size: 1.2rem;
-            z-index: 100;
-        }
+h1 {
+    color: #ff4d4d;
+    font-size: 1.8rem;
+    z-index: 10;
+}
 
-        #btnNo { 
-            position: absolute; 
-            background-color: white; 
-            color: #ff4d4d;
-            border: 2px solid #ff4d4d; 
-            padding: 10px 20px; 
-            border-radius: 50px; 
-            transition: all 0.2s ease;
-            touch-action: none; /* Bloquea gestos del celular para que el botón responda */
-            z-index: 100;
-        }
+.container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+}
 
-        /* Pantalla Final */
-        #pantalla2 {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background-color: #ff3366;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            z-index: 1000;
-            overflow-y: auto;
-        }
+#btnSi {
+    background-color: #ffb3b3;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 10;
+}
 
-        .heart-mask {
-            width: 140px; height: 140px;
-            margin: 10px;
-            object-fit: cover;
-            border: 3px solid white;
-            border-radius: 20px; /* Si el recorte de corazón falla, se verá redondeado bonito */
-            clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 80%, 20% 100%, 0% 35%);
-            -webkit-clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 80%, 20% 100%, 0% 35%);
-        }
+#btnNo {
+    position: absolute;
+    background-color: white;
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
 
-        .corazon-lluvia {
-            position: fixed;
-            top: -50px;
-            z-index: 9999;
-            pointer-events: none;
-            animation: caer 3s linear forwards;
-        }
+/* Pantalla 2 */
+#pantalla2 {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: #ff3366;
+    color: white;
+    z-index: 20;
+    overflow-y: auto;
+}
 
-        @keyframes caer {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-    </style>
+.heart-mask {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    margin: 10px;
+    clip-path: polygon(50% 15%, 61% 2%, 81% 2%, 95% 14%, 95% 35%, 50% 100%, 5% 35%, 5% 14%, 19% 2%, 39% 2%);
+    border: 2px solid white;
+}
+
+/* Lluvia */
+.corazon-caido {
+    position: fixed;
+    top: -10%;
+    font-size: 24px;
+    z-index: 100;
+    animation: caer linear forwards;
+    pointer-events: none;
+}
+
+@keyframes caer {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <div id="pantalla1">
-        <h1>¿Quieres ser mi San Valentín? ❤️</h1>
-        <div class="game-container" id="area">
-            <button id="btnSi" onclick="aceptar()">¡SÍ!</button>
-            <button id="btnNo" onclick="moverBoton()" ontouchstart="moverBoton()">NO</button>
-        </div>
+<div id="pantalla1">
+    <h1>¿Quieres ser mi San Valentín? ❤️</h1>
+    <div class="container">
+        <button id="btnSi" onclick="aceptar()">¡SIIIUUU!</button>
+        <button id="btnNo" onmouseenter="moverBoton()" ontouchstart="moverBoton()">NO</button>
+    </div>
+</div>
+
+<div id="pantalla2">
+    <h2>¡Sabía que dirías que sí! ❤️</h2>
+    <p>Eres lo mejor que me ha pasado amor mío</p>
+
+    <div style="display:flex;justify-content:center;flex-wrap:wrap;">
+        <img src="foto1.jpeg" class="heart-mask" onerror="this.src='https://via.placeholder.com/160'">
+        <img src="foto2.jpeg" class="heart-mask" onerror="this.src='https://via.placeholder.com/160'">
     </div>
 
-    <div id="pantalla2">
-        <h2>¡SABÍA QUE DIRÍAS QUE SÍ! ❤️</h2>
-        <p>Eres lo mejor que me ha pasado</p>
-        <div id="fotosContainer">
-            <img src="foto1.jpeg" class="heart-mask" alt="Foto 1">
-            <img src="foto2.jpeg" class="heart-mask" alt="Foto 2">
-        </div>
-    </div>
+    <br>
+    <button onclick="location.reload()" style="background:none;border:1px solid white;color:white;padding:10px;border-radius:10px;">
+        Volver a intentar ❤️
+    </button>
+</div>
 
-    <script>
-        let intentos = 0;
-        const btnNo = document.getElementById('btnNo');
-        const area = document.getElementById('area');
+<script>
+let intentos = 0;
 
-        // Posición inicial del botón NO
-        btnNo.style.left = "60%";
+function moverBoton() {
+    const btn = document.getElementById('btnNo');
+    const cont = document.querySelector('.container');
 
-        function moverBoton() {
-            if (intentos < 6) {
-                // Calcula el ancho y alto disponible dentro del contenedor
-                const x = Math.random() * (area.clientWidth - btnNo.offsetWidth);
-                const y = Math.random() * (area.clientHeight - btnNo.offsetHeight);
-                
-                btnNo.style.left = x + "px";
-                btnNo.style.top = y + "px";
-                intentos++;
-            } else {
-                alert("¡Ya fue mucho NO! Di que sí ❤️");
-                btnNo.style.display = 'none';
-            }
-        }
+    const maxX = cont.clientWidth - btn.offsetWidth;
+    const maxY = cont.clientHeight - btn.offsetHeight;
 
-        function crearCorazon() {
-            const hearts = ['❤️', '💖', '✨', '🌸', '💝'];
-            const div = document.createElement('div');
-            div.className = 'corazon-lluvia';
-            div.innerText = hearts[Math.floor(Math.random() * hearts.length)];
-            div.style.left = Math.random() * 100 + 'vw';
-            div.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            document.body.appendChild(div);
-            
-            setTimeout(() => div.remove(), 3000);
-        }
+    if (intentos < 5) {
+        btn.style.left = Math.random() * maxX + 'px';
+        btn.style.top = Math.random() * maxY + 'px';
+        btn.style.transform = 'none';
+        intentos++;
+    } else {
+        alert("Apoco sí tilina 😏 ya sabes que eres mía");
+        btn.style.display = 'none';
+    }
+}
 
-        function aceptar() {
-            document.getElementById('pantalla1').style.display = 'none';
-            document.getElementById('pantalla2').style.display = 'block';
-            
-            // Lanza la lluvia con un intervalo
-            setInterval(crearCorazon, 150);
-        }
-    </script>
+function crearLluvia() {
+    const simbolos = ['❤️','💖','💘','✨','🌸'];
+    const corazon = document.createElement('div');
+    corazon.className = 'corazon-caido';
+    corazon.textContent = simbolos[Math.floor(Math.random()*simbolos.length)];
+    corazon.style.left = Math.random()*100 + 'vw';
+    corazon.style.animationDuration = (Math.random()*3 + 3)+'s';
+    document.body.appendChild(corazon);
+    setTimeout(()=>corazon.remove(),6000);
+}
+
+function aceptar() {
+    document.getElementById('pantalla1').style.display = 'none';
+    document.getElementById('pantalla2').style.display = 'block';
+    crearLluvia();
+    setInterval(crearLluvia, 400);
+}
+</script>
+
 </body>
 </html>
